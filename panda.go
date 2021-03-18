@@ -1,45 +1,46 @@
 package main
 
 import (
-  "net/http"
-  "log"
-  "html/template"
+	"fmt"
+    "net/http"
+    "log"
+    "html/template"
+    "os"
 )
 
-
 type RadioButton struct {
-	Name       string
-	Value      string
-	IsDisabled bool
-	IsChecked  bool
-	Text       string
+    Name       string
+    Value      string
+    IsDisabled bool
+    IsChecked  bool
+    Text       string
 }
 
 type PageVariables struct {
-  PageTitle        string
+  PageImageName    string
   PageRadioButtons []RadioButton
   Answer           string
 }
 
-
 func main() {
-  http.HandleFunc("/", DisplayRadioButtons)
+  http.HandleFunc("/", DisplayHome)
   http.HandleFunc("/selected", UserSelected)
   log.Fatal(http.ListenAndServe(":3000", nil))
 }
 
+func DisplayHome(w http.ResponseWriter, r *http.Request) {
 
-func DisplayRadioButtons(w http.ResponseWriter, r *http.Request){
- // Display some radio buttons to the user
+    // Display buttons
+	ImageName := "images/tenor.gif"
+    _, err := os.Stat(ImageName)
+	MyRadioButtons := []RadioButton{
+    RadioButton{"actionselect", "cats", false, false, "Cats"},
+    RadioButton{"actionselect", "dogs", false, false, "Dogs"},
+    }
 
-   Title := "Which do you prefer?"
-   MyRadioButtons := []RadioButton{
-     RadioButton{"actionselect", "cats", false, false, "Cats"},
-     RadioButton{"actionselect", "dogs", false, false, "Dogs"},
-   }
 
   MyPageVariables := PageVariables{
-    PageTitle: Title,
+    PageImageName : ImageName,
     PageRadioButtons : MyRadioButtons,
     }
 
@@ -63,9 +64,7 @@ func UserSelected(w http.ResponseWriter, r *http.Request){
  // so get the animal which has been selected
   youranimal := r.Form.Get("animalselect")
 
-  Title := "Your preferred animal"
   MyPageVariables := PageVariables{
-    PageTitle: Title,
     Answer : youranimal,
     }
 

@@ -2,19 +2,58 @@
 
 <html>
 <head>
-	<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
-	<title>{{.PageTitle}}</title>
+<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+<title>Hello Panda</title>
+
+<style>
+	.button {
+		border: none;
+		color: white;
+		padding: 15px 32px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 16px;
+		margin: 4px 2px;
+		cursor: pointer;
+	}
+	.button1 {background-color: #b7ace8ff;}
+	.button2 {background-color: #7bd0bfff;}
+	.button3 {background-color: #e6a7ccff;}
+	.container {
+   		display: flex;
+    	flex-direction: row;
+    	justify-content: center;
+    	align-items: center;
+	}
+</style>	
+
 </head>
 
-<script type='text/javascript'>
+<!--<script type='text/javascript'>
  	$(document).ready(function() {
    		$('input[name=animalselect]').change(function(){
      		$('form').submit();
    		});
 	});
-</script>
+</script> -->
 
 <body>
+	<div class="container">
+		<h1>Hello Panda</h1>
+	</div>
+	<div class="container">
+		<!-- TODO: change this -->
+		<img src={{.PageImageName}} alt="test image"  width=250/> <!-- TODO: change this -->
+		<img src="http://i.stack.imgur.com/SBv4T.gif" alt="test image"  width=250/> <!-- TODO: change this -->
+	</div>
+	<div class="container">
+		<button class="button button1">Feed!</button>
+		<button class="button button2">Walk!</button>
+		<button class="button button3">Pet!</button>
+	</div>
+	
+<!--
   {{with $1:=.PageRadioButtons}}
   <p> Which do you prefer</p>
 
@@ -28,6 +67,6 @@
   {{with $2:=.Answer}}
     <p>Your answer is {{$2}}</p>
   {{end}}
-
+-->
 </body>
 </html>
