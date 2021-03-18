@@ -33,9 +33,9 @@ func DisplayRadioButtons(w http.ResponseWriter, r *http.Request){
  // Display some radio buttons to the user
 
    Title := "Which do you prefer?"
-   MyActions := []Button{
-     Button{"actionselect", "cats", false, false, "Cats"},
-     Button{"actionselect", "dogs", false, false, "Dogs"},
+   MyRadioButtons := []RadioButton{
+     RadioButton{"actionselect", "cats", false, false, "Cats"},
+     RadioButton{"actionselect", "dogs", false, false, "Dogs"},
    }
 
   MyPageVariables := PageVariables{
