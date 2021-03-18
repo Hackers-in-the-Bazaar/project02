@@ -1,81 +1,142 @@
 package main
 
 import (
-	"fmt"
     "net/http"
     "log"
     "html/template"
-    "os"
 )
 
+// Global Variables
+var hunger, health, mood int
+
+/*
 type RadioButton struct {
     Name       string
     Value      string
     IsDisabled bool
     IsChecked  bool
     Text       string
-}
+} */
 
 type PageVariables struct {
-  PageImageName    string
-  PageRadioButtons []RadioButton
-  Answer           string
+    PageImage   string
+    Hunger      int
+    Health      int
+    Mood        int
 }
 
 func main() {
-  http.HandleFunc("/", DisplayHome)
-  http.HandleFunc("/selected", UserSelected)
-  log.Fatal(http.ListenAndServe(":3000", nil))
+    hunger = 50
+    health = 50
+    mood = 50
+    http.HandleFunc("/", DisplayHome)
+    http.HandleFunc("/feed", PandaFeed)
+    http.HandleFunc("/walk", PandaWalk)
+    http.HandleFunc("/play", PandaPlay)
+    //http.HandleFunc("/selected", UserSelected)
+    log.Fatal(http.ListenAndServe(":3000", nil))
 }
 
 func DisplayHome(w http.ResponseWriter, r *http.Request) {
 
-    // Display buttons
-	ImageName := "images/tenor.gif"
-    _, err := os.Stat(ImageName)
-	MyRadioButtons := []RadioButton{
-    RadioButton{"actionselect", "cats", false, false, "Cats"},
-    RadioButton{"actionselect", "dogs", false, false, "Dogs"},
+    // Initialize display variables
+	image := "https://i.imgur.com/M6n5UQO.gif"          // TODO: change this
+    MyPageVariables := PageVariables{
+        PageImage : image,
+        Hunger : hunger,
+        Health : health,
+        Mood: mood,
     }
 
-
-  MyPageVariables := PageVariables{
-    PageImageName : ImageName,
-    PageRadioButtons : MyRadioButtons,
+    // Display
+    t, err := template.ParseFiles("panda.html")
+    if err != nil {
+        log.Print("template parsing error: ", err)
     }
-
-   t, err := template.ParseFiles("panda.html") //parse the html file homepage.html
-   if err != nil { // if there is an error
-     log.Print("template parsing error: ", err) // log it
-   }
-
-   err = t.Execute(w, MyPageVariables) //execute the template and pass it the HomePageVars struct to fill in the gaps
-   if err != nil { // if there is an error
-     log.Print("template executing error: ", err) //log it
-   }
-
-}
-
-func UserSelected(w http.ResponseWriter, r *http.Request){
-  r.ParseForm()
-  // r.Form is now either
-  // map[animalselect:[cats]] OR
-  // map[animalselect:[dogs]]
- // so get the animal which has been selected
-  youranimal := r.Form.Get("animalselect")
-
-  MyPageVariables := PageVariables{
-    Answer : youranimal,
-    }
-
- // generate page by passing page variables into template
-    t, err := template.ParseFiles("panda.html") //parse the html file homepage.html
-    if err != nil { // if there is an error
-      log.Print("template parsing error: ", err) // log it
-    }
-
-    err = t.Execute(w, MyPageVariables) //execute the template and pass it the HomePageVars struct to fill in the gaps
-    if err != nil { // if there is an error
-      log.Print("template executing error: ", err) //log it
+    err = t.Execute(w, MyPageVariables)
+    if err != nil {
+        log.Print("template executing error: ", err)
     }
 }
+
+
+func PandaFeed(w http.ResponseWriter, r *http.Request) {
+
+    // Initialize display variables
+	image := "https://i.imgur.com/M6n5UQO.gif"          // TODO: change this
+    hunger = hunger - 20
+    if hunger < 0 {
+        hunger = 0
+    }
+    MyPageVariables := PageVariables{
+        PageImage : image,
+        Hunger : hunger,
+        Health : health,
+        Mood: mood,
+    }
+
+    // Display homepage
+    t, err := template.ParseFiles("panda.html")
+    if err != nil {
+        log.Print("template parsing error: ", err)
+    }
+    err = t.Execute(w, MyPageVariables)
+    if err != nil {
+        log.Print("template executing error: ", err)
+    }
+}
+
+
+func PandaWalk(w http.ResponseWriter, r *http.Request) {
+
+    // Initialize display variables
+	image := "https://i.imgur.com/M6n5UQO.gif"          // TODO: change this
+    health = health + 20
+    if health > 100 {
+        health = 100
+    }
+    MyPageVariables := PageVariables{
+        PageImage : image,
+        Hunger : hunger,
+        Health : health,
+        Mood: mood,
+    }
+
+    // Display homepage
+    t, err := template.ParseFiles("panda.html")
+    if err != nil {
+        log.Print("template parsing error: ", err)
+    }
+    err = t.Execute(w, MyPageVariables)
+    if err != nil {
+        log.Print("template executing error: ", err)
+    }
+}
+
+
+func PandaPlay(w http.ResponseWriter, r *http.Request) {
+
+    // Initialize display variables
+	image := "https://i.imgur.com/M6n5UQO.gif"          // TODO: change this
+    mood = mood + 20
+    if mood > 100 {
+        mood = 100
+    }
+    MyPageVariables := PageVariables{
+        PageImage : image,
+        Hunger : hunger,
+        Health : health,
+        Mood: mood,
+    }
+
+    // Display homepage
+    t, err := template.ParseFiles("panda.html")
+    if err != nil {
+        log.Print("template parsing error: ", err)
+    }
+    err = t.Execute(w, MyPageVariables)
+    if err != nil {
+        log.Print("template executing error: ", err)
+    }
+}
+
