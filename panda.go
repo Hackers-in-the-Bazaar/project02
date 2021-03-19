@@ -4,6 +4,7 @@ import (
     "net/http"
     "log"
     "html/template"
+	"time"
 )
 
 // Global Variables
@@ -30,8 +31,19 @@ func main() {
 
 func DisplayHome(w http.ResponseWriter, r *http.Request) {
 
+	// Select panda GIF
+	var image string
+	if hunger > 80 {
+		image = "https://i.imgur.com/UtVAPiM.jpeg"		// TODO: change later
+	} else if health < 20 {
+		image = "https://i.imgur.com/UtVAPiM.jpeg"		// TODO: change later
+	} else if mood < 20 {
+		image = "https://i.imgur.com/UtVAPiM.jpeg"		// TODO: change later
+	} else {
+		image = "https://i.imgur.com/BXzP2ym.gif"
+	}
+
     // Initialize display variables
-	image := "https://i.imgur.com/UtVAPiM.jpeg"
     MyPageVariables := PageVariables{
         PageImage : image,
         Hunger : hunger,
@@ -48,6 +60,23 @@ func DisplayHome(w http.ResponseWriter, r *http.Request) {
     if err != nil {
         log.Print("template executing error: ", err)
     }
+
+	// Update attributes and refresh
+	//time.Sleep(20 * time.Second)
+	hunger = hunger + 5
+	health = health - 5
+	mood = mood - 5
+	if hunger > 100 {
+		hunger = 100
+	}
+	if health < 0 {
+		health = 0
+	}
+	if mood < 0 {
+		mood = 0
+	}
+	http.Redirect(w, r, "http://3.141.45.193:3000", 301)
+	//http.Redirect(w, r, "/", 307)
 }
 
 
@@ -75,6 +104,10 @@ func PandaFeed(w http.ResponseWriter, r *http.Request) {
     if err != nil {
         log.Print("template executing error: ", err)
     }
+
+	// Redirect to homepage
+	time.Sleep(6 * time.Second)
+	http.Redirect(w, r, "http://3.141.45.193:3000", 307)
 }
 
 
@@ -102,6 +135,10 @@ func PandaWalk(w http.ResponseWriter, r *http.Request) {
     if err != nil {
         log.Print("template executing error: ", err)
     }
+
+	// Redirect to homepage
+	time.Sleep(6 * time.Second)
+	http.Redirect(w, r, "http://3.141.45.193:3000", 307)
 }
 
 
@@ -129,5 +166,9 @@ func PandaPlay(w http.ResponseWriter, r *http.Request) {
     if err != nil {
         log.Print("template executing error: ", err)
     }
+
+	// Redirect to homepage
+	time.Sleep(6 * time.Second)
+	http.Redirect(w, r, "http://3.141.45.193:3000", 307)
 }
 
