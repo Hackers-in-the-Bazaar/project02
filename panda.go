@@ -9,15 +9,6 @@ import (
 // Global Variables
 var hunger, health, mood int
 
-/*
-type RadioButton struct {
-    Name       string
-    Value      string
-    IsDisabled bool
-    IsChecked  bool
-    Text       string
-} */
-
 type PageVariables struct {
     PageImage   string
     Hunger      int
@@ -40,7 +31,7 @@ func main() {
 func DisplayHome(w http.ResponseWriter, r *http.Request) {
 
     // Initialize display variables
-	image := "https://i.imgur.com/M6n5UQO.gif"          // TODO: change this
+	image := "https://i.imgur.com/UtVAPiM.jpeg"
     MyPageVariables := PageVariables{
         PageImage : image,
         Hunger : hunger,
@@ -63,7 +54,7 @@ func DisplayHome(w http.ResponseWriter, r *http.Request) {
 func PandaFeed(w http.ResponseWriter, r *http.Request) {
 
     // Initialize display variables
-	image := "https://i.imgur.com/M6n5UQO.gif"          // TODO: change this
+	image := "https://i.imgur.com/s7aq5u8.gif"
     hunger = hunger - 20
     if hunger < 0 {
         hunger = 0
@@ -75,7 +66,7 @@ func PandaFeed(w http.ResponseWriter, r *http.Request) {
         Mood: mood,
     }
 
-    // Display homepage
+    // Display
     t, err := template.ParseFiles("panda.html")
     if err != nil {
         log.Print("template parsing error: ", err)
@@ -90,7 +81,7 @@ func PandaFeed(w http.ResponseWriter, r *http.Request) {
 func PandaWalk(w http.ResponseWriter, r *http.Request) {
 
     // Initialize display variables
-	image := "https://i.imgur.com/M6n5UQO.gif"          // TODO: change this
+	image := "https://i.imgur.com/f1DspuH.gif"
     health = health + 20
     if health > 100 {
         health = 100
@@ -102,7 +93,7 @@ func PandaWalk(w http.ResponseWriter, r *http.Request) {
         Mood: mood,
     }
 
-    // Display homepage
+    // Display
     t, err := template.ParseFiles("panda.html")
     if err != nil {
         log.Print("template parsing error: ", err)
@@ -117,7 +108,7 @@ func PandaWalk(w http.ResponseWriter, r *http.Request) {
 func PandaPlay(w http.ResponseWriter, r *http.Request) {
 
     // Initialize display variables
-	image := "https://i.imgur.com/M6n5UQO.gif"          // TODO: change this
+	image := "https://i.imgur.com/YgbHcz8.gif"
     mood = mood + 20
     if mood > 100 {
         mood = 100
@@ -129,7 +120,7 @@ func PandaPlay(w http.ResponseWriter, r *http.Request) {
         Mood: mood,
     }
 
-    // Display homepage
+    // Display
     t, err := template.ParseFiles("panda.html")
     if err != nil {
         log.Print("template parsing error: ", err)
