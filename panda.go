@@ -4,7 +4,6 @@ import (
     "net/http"
     "log"
     "html/template"
-	"time"
 )
 
 // Global Variables
@@ -25,9 +24,9 @@ func main() {
     http.HandleFunc("/feed", PandaFeed)
     http.HandleFunc("/walk", PandaWalk)
     http.HandleFunc("/play", PandaPlay)
-    //http.HandleFunc("/selected", UserSelected)
     log.Fatal(http.ListenAndServe(":3000", nil))
 }
+
 
 func DisplayHome(w http.ResponseWriter, r *http.Request) {
 
@@ -61,8 +60,7 @@ func DisplayHome(w http.ResponseWriter, r *http.Request) {
         log.Print("template executing error: ", err)
     }
 
-	// Update attributes and refresh
-	//time.Sleep(20 * time.Second)
+	// Update attributes
 	hunger = hunger + 5
 	health = health - 5
 	mood = mood - 5
@@ -75,8 +73,6 @@ func DisplayHome(w http.ResponseWriter, r *http.Request) {
 	if mood < 0 {
 		mood = 0
 	}
-	http.Redirect(w, r, "http://3.141.45.193:3000", 301)
-	//http.Redirect(w, r, "/", 307)
 }
 
 
@@ -84,7 +80,7 @@ func PandaFeed(w http.ResponseWriter, r *http.Request) {
 
     // Initialize display variables
 	image := "https://i.imgur.com/s7aq5u8.gif"
-    hunger = hunger - 20
+    hunger = hunger - 30
     if hunger < 0 {
         hunger = 0
     }
@@ -104,10 +100,6 @@ func PandaFeed(w http.ResponseWriter, r *http.Request) {
     if err != nil {
         log.Print("template executing error: ", err)
     }
-
-	// Redirect to homepage
-	time.Sleep(6 * time.Second)
-	http.Redirect(w, r, "http://3.141.45.193:3000", 307)
 }
 
 
@@ -115,7 +107,7 @@ func PandaWalk(w http.ResponseWriter, r *http.Request) {
 
     // Initialize display variables
 	image := "https://i.imgur.com/f1DspuH.gif"
-    health = health + 20
+    health = health + 30
     if health > 100 {
         health = 100
     }
@@ -135,10 +127,6 @@ func PandaWalk(w http.ResponseWriter, r *http.Request) {
     if err != nil {
         log.Print("template executing error: ", err)
     }
-
-	// Redirect to homepage
-	time.Sleep(6 * time.Second)
-	http.Redirect(w, r, "http://3.141.45.193:3000", 307)
 }
 
 
@@ -146,7 +134,7 @@ func PandaPlay(w http.ResponseWriter, r *http.Request) {
 
     // Initialize display variables
 	image := "https://i.imgur.com/YgbHcz8.gif"
-    mood = mood + 20
+    mood = mood + 30
     if mood > 100 {
         mood = 100
     }
@@ -166,9 +154,5 @@ func PandaPlay(w http.ResponseWriter, r *http.Request) {
     if err != nil {
         log.Print("template executing error: ", err)
     }
-
-	// Redirect to homepage
-	time.Sleep(6 * time.Second)
-	http.Redirect(w, r, "http://3.141.45.193:3000", 307)
 }
 
