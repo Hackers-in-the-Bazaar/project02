@@ -2,32 +2,52 @@
 
 <html>
 <head>
-	<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
-	<title>{{.PageTitle}}</title>
+<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+<title>Hello Panda</title>
+
+<style>
+	.button {
+		border: none;
+		color: white;
+		padding: 15px 32px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 16px;
+		margin: 4px 2px;
+		cursor: pointer;
+	}
+	.button1 {background-color: #b7ace8ff;}
+	.button2 {background-color: #7bd0bfff;}
+	.button3 {background-color: #e6a7ccff;}
+	.text1 {color: #b7ace8ff;}
+	.text2 {color: #7bd0bfff;}
+	.text3 {color: #e6a7ccff;}
+	.container {
+   		display: flex;
+    	flex-direction: row;
+    	justify-content: center;
+    	align-items: center;
+	}
+</style>	
 </head>
 
-<script type='text/javascript'>
- 	$(document).ready(function() {
-   		$('input[name=animalselect]').change(function(){
-     		$('form').submit();
-   		});
-	});
-</script>
-
 <body>
-  {{with $1:=.PageRadioButtons}}
-  <p> Which do you prefer</p>
+	<div class="container">
+		<h1>Hello Panda</h1>
+	</div>
 
-    <form action="/selected" method="post">
-         {{range $1}}
-           <input type="radio" name={{.Name}} value={{.Value}} {{if .IsDisabled}} disabled=true {{end}} {{if .IsChecked}}checked{{end}}> {{.Text}}
-         {{end}}
-    </form>
-  {{end}}
+	<div class="container">
+		<img src={{.PageImage}} alt="panda"  height=400/>
+	</div>
 
-  {{with $2:=.Answer}}
-    <p>Your answer is {{$2}}</p>
-  {{end}}
-
+	<div class="container">
+		<a class="button button1" href="http://3.141.45.193:3000/feed">Feed!</a>
+		<a class="button button2" href="http://3.141.45.193:3000/walk">Walk!</a>
+		<a class="button button3" href="http://3.141.45.193:3000/play">Play!</a>
+	</div>
+	<div class="container">
+		<p><span class="text1">Hunger: {{.Hunger}}&emsp;&emsp;</span><span class="text2">Health: {{.Health}}&emsp;&emsp;</span><span class="text3">Mood: {{.Mood}}</span></p>
+	</div>
 </body>
 </html>
