@@ -8,8 +8,10 @@ We wanted to created a virtual pet experience for the user. The application allo
 ## How to run the code
 After getting the code, compile the server-side code by running:
 > go build panda.go
+
 Then, start the server side code:
 > ./panda
+
 Now, connect to the server on port `3000`
 
 ## Unique features of Golang
