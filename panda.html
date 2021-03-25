@@ -21,6 +21,7 @@
 	.button1 {background-color: #b7ace8ff;}
 	.button2 {background-color: #7bd0bfff;}
 	.button3 {background-color: #e6a7ccff;}
+	.reset {background-color: #ff7357;}
 	.text1 {color: #b7ace8ff;}
 	.text2 {color: #7bd0bfff;}
 	.text3 {color: #e6a7ccff;}
@@ -50,10 +51,8 @@
 	<div class="container">
 		<p><span class="text1">Hunger: {{.Hunger}}&emsp;&emsp;</span><span class="text2">Health: {{.Health}}&emsp;&emsp;</span><span class="text3">Mood: {{.Mood}}</span></p>
 	</div>
-<!--	<script>
-		var timer = setTimeout(function() {
-    		window.location='http://3.141.45.193:3000'
-    	}, 30000);
-	</script> -->
+	<div class="container">
+	<a class="button reset" href="http://3.141.45.193:3000/reset">Reset</a>
+	</div>
 </body>
 </html>

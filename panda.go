@@ -24,6 +24,7 @@ func main() {
     http.HandleFunc("/feed", PandaFeed)
     http.HandleFunc("/walk", PandaWalk)
     http.HandleFunc("/play", PandaPlay)
+    http.HandleFunc("/reset", PandaReset)
     log.Fatal(http.ListenAndServe(":3000", nil))
 }
 
@@ -33,13 +34,13 @@ func DisplayHome(w http.ResponseWriter, r *http.Request) {
 	// Select panda GIF
 	var image string
 	if hunger > 80 {
-		image = "https://i.imgur.com/UtVAPiM.jpeg"		// TODO: change later
+		image = "https://i.imgur.com/mxPciIj.gif"
 	} else if health < 20 {
-		image = "https://i.imgur.com/UtVAPiM.jpeg"		// TODO: change later
+		image = "https://i.imgur.com/cbtJdl7.gif"
 	} else if mood < 20 {
-		image = "https://i.imgur.com/UtVAPiM.jpeg"		// TODO: change later
+		image = "https://i.imgur.com/13jzL9I.gif"
 	} else {
-		image = "https://i.imgur.com/BXzP2ym.gif"
+		image = "https://i.imgur.com/ojxKgtD.gif"
 	}
 
     // Initialize display variables
@@ -138,6 +139,32 @@ func PandaPlay(w http.ResponseWriter, r *http.Request) {
     if mood > 100 {
         mood = 100
     }
+    MyPageVariables := PageVariables{
+        PageImage : image,
+        Hunger : hunger,
+        Health : health,
+        Mood: mood,
+    }
+
+    // Display
+    t, err := template.ParseFiles("panda.html")
+    if err != nil {
+        log.Print("template parsing error: ", err)
+    }
+    err = t.Execute(w, MyPageVariables)
+    if err != nil {
+        log.Print("template executing error: ", err)
+    }
+}
+
+
+func PandaReset(w http.ResponseWriter, r *http.Request) {
+
+    // Initialize display variables
+	image := "https://i.imgur.com/BXzP2ym.gif"
+    hunger = 50
+	health = 50
+	mood = 50
     MyPageVariables := PageVariables{
         PageImage : image,
         Hunger : hunger,
